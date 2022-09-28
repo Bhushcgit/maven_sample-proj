@@ -10,10 +10,12 @@ node('slave-jup')
 	}
     stage('Continuous Deployment') 
 	{
-     sh label: '', script: 'scp ~/workspace/jenkins/workspace/multibranch-pipeline_master/target/*jar  root@192.168.100.5:/root/tomcat/apache-tomcat-10.0.8/webapps/qaenv.war'
+     sh label: '', script: 'scp ~/workspace/jenkins/workspace/multibranch-pipeline_master/target/*jar  root@192.168.100.5:/root/tomcat/apache-tomcat-10.0.8/webapps/'
 	}
     stage('Continuous Testing') 
 	{
-              sh label: '', script: 'echo "Testing Passed"'
+               sh 'java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App >result.txt'
+		sh 'cat result.txt'
+		sh label: '', script: 'echo "Testing Passed"'
 	}
 }
